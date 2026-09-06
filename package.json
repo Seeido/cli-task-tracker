@@ -1,0 +1,18 @@
+{
+  "name": "cli-task-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A task tracker that lives in your CLI!",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seeido/cli-task-tracker.git"
+  },
+  "author": "Seeido",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Seeido/cli-task-tracker/issues"
+  },
+  "homepage": "https://github.com/Seeido/cli-task-tracker#readme"
+}
