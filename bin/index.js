@@ -5,9 +5,13 @@ import { route } from "../src/commands/router.js";
 const args = argv.slice(2);
 
 if (args.length < 1) {
-  //
-  console.log(`Please provide a command to run`);
+  console.error(`Please provide a command to run`);
   process.exit(1); // No command provided
 }
 
-console.log(route(args));
+try {
+  console.log(route(args));
+} catch (error) {
+  console.error(`${error}`);
+  process.exit(1);
+}

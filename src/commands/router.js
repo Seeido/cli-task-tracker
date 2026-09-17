@@ -13,7 +13,7 @@ export function route(args) {
   const command = args[commandIdx];
 
   if (!validCommands.includes(command)) {
-    return `Error: '${command}' is not a valid command`;
+    throw Error(`'${command}' is not a valid command`);
   }
 
   const argsCalled = args.slice(commandIdx + 1);
