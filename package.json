@@ -5,6 +5,9 @@
   "type": "module",
   "description": "A task tracker that lives in your CLI!",
   "main": "index.js",
+  "bin": {
+    "clitask": "./bin/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Seeido/cli-task-tracker.git"

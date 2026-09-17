@@ -10,3 +10,9 @@ It allows you to:
 - List all tasks that are done
 - List all tasks that are not done
 - List all tasks that are in progress
+
+Installation:  
+`npm install -g cli-task-tracker`
+
+Uninstallation:  
+`npm uninstall -g cli-task-tracker`
