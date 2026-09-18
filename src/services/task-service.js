@@ -1,9 +1,20 @@
+import { getData, saveData } from "../utils/storage-service.js";
+
 export function addService(obj) {
-  const desc = obj["description"];
+  const desc = obj.description;
   if (!desc) {
     throw Error(`(internal): received invalid object to add`);
   }
   return createTask(desc);
+}
+
+export function updateService(obj) {
+  const id = obj.id;
+  const description = obj.description;
+  if (!description || !id) {
+    throw Error(`(internal): received invalid object to update`);
+  }
+  return updateTask(obj);
 }
 
 function createTask(desc) {
@@ -17,15 +28,27 @@ function createTask(desc) {
   return saveData(taskObj);
 }
 
-// IMPLEMENT: update provided fields for task id passed and leave others unchanged
-function updateTask(obj) {
-  const taskObj = {};
-  return saveData(taskObj);
+function updateTask(newObj) {
+  let task;
+  let idx;
+  try {
+    [task, idx] = getTask(newObj.id); // getTask returns task object and its index in data.json
+  } catch (error) {
+    throw Error(`no task with ID ${newObj.id} found`);
+  }
+  const newTask = {
+    id: task.id,
+    description: newObj.description ? newObj.description : task.description,
+    status: newObj.status ? newObj.status : task.status,
+    createdAt: task.createdAt,
+    updatedAt: Date.now(),
+  };
+  return saveData(newTask, idx);
 }
 
 function getNewId() {
   const dataArr = getData();
-  const ids = dataArr.map((task) => task["id"]).sort((a, b) => a - b);
+  const ids = dataArr.map((task) => task.id).sort((a, b) => a - b);
   let newId = 1;
   for (const id of ids) {
     if (newId !== id) break;
@@ -34,4 +57,12 @@ function getNewId() {
   return newId;
 }
 
-import { getData, saveData } from "../utils/storage-service.js";
+function getTask(id) {
+  const dataArr = getData();
+  const validIds = dataArr.map((task) => task.id);
+  if (validIds.includes(id)) {
+    const taskIdx = dataArr.findIndex((obj) => obj.id === id);
+    return [dataArr[taskIdx], taskIdx];
+  }
+  return false;
+}

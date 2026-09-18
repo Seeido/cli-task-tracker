@@ -28,10 +28,14 @@ export function getData() {
   }
 }
 
-//IMPLEMENT: update instead of pushing if a task with ID provided already exists
-export function saveData(taskObj) {
+// idx is provided if there's an existing task to update instead of pushing new one
+export function saveData(taskObj, idx) {
   const dataArray = getData();
-  dataArray.push(taskObj);
+  if (idx === undefined) {
+    dataArray.push(taskObj);
+  } else {
+    dataArray[idx] = taskObj;
+  }
   writeFileSync(DATA_PATH, JSON.stringify(dataArray), "utf-8");
-  return dataArray.at(-1);
+  return dataArray.at(idx ? idx : -1); // keep in mind this returns the task before the update / old version
 }
