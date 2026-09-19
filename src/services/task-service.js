@@ -32,7 +32,7 @@ export function deleteService(id) {
   try {
     [, idx] = getTask(id); // getTask returns index of passed task/id at the end
   } catch (error) {
-    throw Error(`no task with ID ${id} found`);
+    throw error;
   }
   return saveData("", idx, true); // last parameter determines to delete or not
 }
@@ -54,7 +54,7 @@ function updateTask(newObj) {
   try {
     [task, idx] = getTask(newObj.id); // getTask returns task object and its index in data.json
   } catch (error) {
-    throw Error(`no task with ID ${newObj.id} found`);
+    throw error;
   }
   const newTask = {
     id: task.id,
@@ -80,9 +80,9 @@ function getNewId() {
 function getTask(id) {
   const dataArr = getData();
   const validIds = dataArr.map((task) => task.id);
-  if (validIds.includes(id)) {
-    const taskIdx = dataArr.findIndex((obj) => obj.id === id);
-    return [dataArr[taskIdx], taskIdx];
+  if (!validIds.includes(id)) {
+    throw Error(`no task with ID ${id} found`);
   }
-  return false;
+  const taskIdx = dataArr.findIndex((obj) => obj.id === id);
+  return [dataArr[taskIdx], taskIdx];
 }
