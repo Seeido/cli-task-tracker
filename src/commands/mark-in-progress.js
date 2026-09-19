@@ -1,10 +1,11 @@
 import { updateService } from "../services/task-service.js";
+import { styleText } from "node:util";
 
 export function markInProgressCmd(args) {
   let id = args[0];
   if (args.length != 1 || !/^\d+$/.test(id)) {
     throw Error(
-      `please provide task (ID) to mark as in-progress.\nSample: clitask mark-in-progress 3`,
+      `please provide a task (ID) to mark as in-progress.\n${styleText("blue", "Sample: clitask mark-in-progress 3")}`,
     );
   }
 
@@ -17,7 +18,7 @@ export function markInProgressCmd(args) {
 
   try {
     const updatedTask = updateService(obj);
-    return `Task is now in-progress! (ID: ${updatedTask.id})`;
+    return `Task is now in-progress! (ID: ${styleText("magenta", updatedTask.id.toString())}${styleText("green", ")")}`;
   } catch (error) {
     throw error;
   }

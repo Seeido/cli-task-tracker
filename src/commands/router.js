@@ -1,3 +1,11 @@
+import { addCmd } from "./add.js";
+import { updateCmd } from "./update.js";
+import { deleteCmd } from "./delete.js";
+import { markInProgressCmd } from "./mark-in-progress.js";
+import { markDoneCmd } from "./mark-done.js";
+import { listCmd } from "./list.js";
+import { styleText } from "node:util";
+
 const validCommands = [
   "add",
   "update",
@@ -13,7 +21,9 @@ export function route(args) {
   const command = args[commandIdx];
 
   if (!validCommands.includes(command)) {
-    throw Error(`'${command}' is not a valid command`);
+    throw Error(
+      `'${command}' is not a valid command.\n${styleText("blue", "Run 'clitask help' for more information")}`,
+    );
   }
 
   const argsCalled = args.slice(commandIdx + 1);
@@ -29,10 +39,3 @@ const taskCommands = {
   "mark-done": markDoneCmd,
   list: listCmd,
 };
-
-import { addCmd } from "./add.js";
-import { updateCmd } from "./update.js";
-import { deleteCmd } from "./delete.js";
-import { markInProgressCmd } from "./mark-in-progress.js";
-import { markDoneCmd } from "./mark-done.js";
-import { listCmd } from "./list.js";

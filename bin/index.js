@@ -1,17 +1,23 @@
 #!/usr/bin/env node
 import { argv } from "node:process";
 import { route } from "../src/commands/router.js";
+import { styleError } from "../src/utils/text-styling.js";
+import { styleText } from "node:util";
 
 const args = argv.slice(2);
 
 if (args.length < 1) {
-  console.error(`Please provide a command to run`);
+  console.error(
+    styleError(
+      `Please provide a command to run.\n${styleText("blue", "Run 'clitask help' for more information")}`,
+    ),
+  );
   process.exit(1); // No command provided
 }
 
 try {
-  console.log(route(args));
+  console.log(styleText("green", route(args)));
 } catch (error) {
-  console.error(`${error}`);
+  console.error(styleError(`${error}`));
   process.exit(1);
 }
