@@ -25,6 +25,16 @@ export function updateService(obj) {
   return updateTask(obj);
 }
 
+export function deleteService(id) {
+  let idx;
+  try {
+    [, idx] = getTask(id); // getTask returns index of passed task/id at the end
+  } catch (error) {
+    throw Error(`no task with ID ${id} found`);
+  }
+  return saveData("", idx, true); // last parameter determines to delete or not
+}
+
 function createTask(desc) {
   const taskObj = {
     id: getNewId(),

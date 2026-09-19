@@ -28,14 +28,22 @@ export function getData() {
   }
 }
 
-// idx is provided if there's an existing task to update instead of pushing new one
-export function saveData(taskObj, idx) {
+// idx is provided if there's an existing task to update. del is passed as true if task should be deleted
+export function saveData(taskObj, idx, del) {
   const dataArray = getData();
-  if (idx === undefined) {
-    dataArray.push(taskObj);
+  let returnObj;
+  if (idx != null) {
+    if (del) {
+      returnObj = dataArray.splice(idx, 1)[0]; // splice returns deleted elements in an array
+      console.log(returnObj);
+    } else {
+      dataArray[idx] = taskObj;
+      returnObj = taskObj;
+    }
   } else {
-    dataArray[idx] = taskObj;
+    dataArray.push(taskObj);
+    returnObj = dataArray.at(-1);
   }
   writeFileSync(DATA_PATH, JSON.stringify(dataArray), "utf-8");
-  return dataArray.at(idx ? idx : -1); // keep in mind this returns the task before the update / old version
+  return returnObj;
 }
