@@ -19,7 +19,9 @@ export function addService(obj) {
 export function updateService(obj) {
   const id = obj.id;
   const description = obj.description;
-  if (!description || !id) {
+  const status = obj.status;
+  // ids start from 1 so !0 is never an issue for !id
+  if (!id || (!description && !status)) {
     throw Error(`(internal): received invalid object to update`);
   }
   return updateTask(obj);
