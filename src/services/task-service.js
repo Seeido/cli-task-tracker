@@ -1,5 +1,13 @@
 import { getData, saveData } from "../utils/storage-service.js";
 
+export function listService(status) {
+  let tasks = getData();
+  if (status) {
+    tasks = tasks.filter((task) => task.status === status);
+  }
+  return tasks;
+}
+
 export function addService(obj) {
   const desc = obj.description;
   if (!desc) {
