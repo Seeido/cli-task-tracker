@@ -35,7 +35,6 @@ export function saveData(taskObj, idx, del) {
   if (idx != null) {
     if (del) {
       returnObj = dataArray.splice(idx, 1)[0]; // splice returns deleted elements in an array
-      console.log(returnObj);
     } else {
       dataArray[idx] = taskObj;
       returnObj = taskObj;
