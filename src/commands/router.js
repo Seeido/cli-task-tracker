@@ -19,7 +19,8 @@ const validCommands = [
 const commandIdx = 0; // index.js passes args after trimming execPath and entry point
 
 export function route(args) {
-  const command = args[commandIdx];
+  args = args.map((arg) => arg.trim()).filter((arg) => arg !== "");
+  const command = args[commandIdx].toLowerCase();
 
   if (!validCommands.includes(command)) {
     throw Error(
